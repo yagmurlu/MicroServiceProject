@@ -1,3 +1,7 @@
+using CasegmMicroservice.Serives.Order.Core.Application;
+using CasegmMicroservice.Serives.Order.Core.Application.Interfaces;
+using CasgemMicroservice.Infrastructure.Persistance.Context;
+using CasgemMicroservice.Infrastructure.Persistance.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,8 +32,11 @@ namespace CasgemMicroservice.Services.Order.Presentation.Api
 		{
 			
 			services.AddControllers();
-
-			services.AddSwaggerGen(c =>
+			services.AddDbContext<OrderContext>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddApplicationServices(Configuration);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "CasgemMicroservice.Services.Order.Presentation.Api", Version = "v1" });
 			});

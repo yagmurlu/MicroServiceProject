@@ -13,7 +13,7 @@ namespace CasgemMicroservice.Infrastructure.Persistance.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=localhost,1433;database=CasgemOrderDb;user=sa;password=123456789Aleyna*");
+            optionsBuilder.UseSqlServer("server=localhost,1433;database=CasgemOrderDb;user=sa;password=123456789Aleyna");
         }
 
         public DbSet<Address> Addresses { get; set; }
