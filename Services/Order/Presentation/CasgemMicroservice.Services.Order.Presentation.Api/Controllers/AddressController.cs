@@ -1,4 +1,5 @@
-﻿using CasegmMicroservice.Serives.Order.Core.Application.Features.CQRS.Queries;
+﻿using CasegmMicroservice.Serives.Order.Core.Application.Features.CQRS.Commands;
+using CasegmMicroservice.Serives.Order.Core.Application.Features.CQRS.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,30 @@ namespace CasgemMicroservice.Services.Order.Presentation.Api.Controllers
         {
             var values = await _mediator.Send(new GetAllAddressQueryRequest());
             return Ok(values);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> AddressGetById(int id)
+        {
+            var value = await _mediator.Send(new GetByIdAddressQueryRequest(id));
+            return Ok(value);
+        }
+        [HttpPost]
+        public async Task <IActionResult> AddressCreate(CreateAddressCommandRequest createAddressCommandRequest)
+        {
+            await _mediator.Send(createAddressCommandRequest);
+            return Ok("Adres Eklendi");
+        }
+        [HttpPut]
+        public async Task<IActionResult> AddressUpdate(UpdateAddressCommandRequest updateAddressCommandRequest)
+        {
+            await _mediator.Send(updateAddressCommandRequest);
+            return Ok("Adres Güncellendi");
+        }
+        [HttpDelete]
+        public async Task<IActionResult> AddressDelete(int id)
+        {
+            await _mediator.Send(new RemoveAddressCommandRequest(id));
+            return Ok("Adres Silindi");
         }
     }
 }
